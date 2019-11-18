@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jcckit" type="kotlin.js">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/jcckit.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

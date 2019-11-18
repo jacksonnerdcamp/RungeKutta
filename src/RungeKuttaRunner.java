@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 
 public class RungeKuttaRunner {
     public static void main(String[] args){
@@ -7,6 +5,7 @@ public class RungeKuttaRunner {
         double B = 0.154;
         double w = 1.2199778;
         double dt = 0.01030049121;
+        double R = 0.10;
         double[] T = new double[50000];
         for(int n = 0; n < 49999; n++)
         {
@@ -32,20 +31,23 @@ public class RungeKuttaRunner {
             kx3[i] = (v[i] + 0.5*kv2[i]) * dt;
             kx4[i] = (v[i] + kv3[i]) * dt;
             //setting kv values
-            kv1[i] = (x[i] - A*Math.pow(x[i],3) - B*v[i] + Math.cos(w * T[i])) * dt;
-            kv2[i] = ((x[i] + 0.5*kx1[i]) - A*Math.pow(x[i]+0.5*kx1[i], 3) - B*(v[i] + 0.5*kv1[i]) + Math.cos(T[i]+0.5*dt)) * dt;
-            kv3[i] = ((x[i] + 0.5*kx2[i]) - A*Math.pow(x[i]+0.5*kx2[i], 3) - B*(v[i] + 0.5*kv2[i]) + Math.cos(T[i]+0.5*dt)) * dt;
-            kv4[i] = ((x[i] + kx3[i]) - A*Math.pow(x[i]+kx3[i], 3) - B*(v[i]+kv3[i]) + Math.cos(T[i]+dt)) * dt;
+            kv1[i] = (x[i] - (A * Math.pow(x[i],3)) - (B * v[i]) + Math.cos(w * T[i])) * dt;
+            kv2[i] = (((x[i] + (0.5 * kx1[i])) - (A * Math.pow(x[i] + 0.5 * kx1[i], 3)) - (B * (v[i] + (0.5 * kv1[i])))) + (R * Math.cos(w * (T[i] + (0.5 * dt))))) * dt;
+            kv3[i] = ((x[i] + 0.5*kx2[i]) - (A * Math.pow(x[i]+0.5*kx2[i], 3)) - (B * (v[i] + 0.5 * kv2[i])) + R * Math.cos(w * (T[i] + (0.5 * dt)))) * dt;
+            kv4[i] = ((x[i] + kx3[i]) - (A * Math.pow(x[i]+kx3[i], 3)) - (B * (v[i]+kv3[i])) + R * Math.cos(w * (T[i]+dt))) * dt;
             //setting x and v values
             x[i+1] = x[i] + (kx1[i]/6.0) + (kx2[i]/3.0) + (kx3[i]/3.0) + (kx4[i]/6.0);
             v[i+1] = v[i] + (kv1[i]/6.0) + (kv2[i]/3.0) + (kv3[i]/3.0) + (kv4[i]/6.0);
-
-
-
-
         }
+
         for(int i = 0; i < 49999; i++){
             System.out.println(x[i] + ",");
         }
+
+        //System.out.println(x[100] + ", " + v[49999]);
+
+        /*plot(x, v); // create a plot using xaxis and yvalues
+        System.out.println("Press enter to exit");
+        System.in.read(); */
     }
 }
